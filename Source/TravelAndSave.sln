@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{9BDA7108-EFC3-4AFA-8E02-B143D54F2942}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{D64E66EB-3CD0-4633-BF4C-79EA769361E1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{BC537BA1-3DD3-426E-9AF6-0215499ADC86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelAndSave.Server.Api", "Server\TravelAndSave.Server.Api\TravelAndSave.Server.Api.csproj", "{DB4D25C3-9893-403E-BDD2-F719CA760F2F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{5A88595C-BB41-4F17-AE70-2D5344F795B5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DB4D25C3-9893-403E-BDD2-F719CA760F2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB4D25C3-9893-403E-BDD2-F719CA760F2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB4D25C3-9893-403E-BDD2-F719CA760F2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB4D25C3-9893-403E-BDD2-F719CA760F2F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DB4D25C3-9893-403E-BDD2-F719CA760F2F} = {BC537BA1-3DD3-426E-9AF6-0215499ADC86}
+	EndGlobalSection
+EndGlobal
