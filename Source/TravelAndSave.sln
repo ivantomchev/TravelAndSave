@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelAndSave.Data", "Data\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelAndSave.Data.Models", "Data\TravelAndSave.Data.Models\TravelAndSave.Data.Models.csproj", "{C03BE8D5-636A-4778-B00E-89A3AE747DE6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelAndSave.Services.Data", "Services\TravelAndSave.Services.Data\TravelAndSave.Services.Data.csproj", "{51E20053-BB1F-4EE8-AA1F-7093D3BD235A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelAndSave.Services.Remote", "Services\TravelAndSave.Services.Remote\TravelAndSave.Services.Remote.csproj", "{3170FAA7-6398-4E07-AAA6-D2DABB9EBADD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,14 @@ Global
 		{C03BE8D5-636A-4778-B00E-89A3AE747DE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C03BE8D5-636A-4778-B00E-89A3AE747DE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C03BE8D5-636A-4778-B00E-89A3AE747DE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51E20053-BB1F-4EE8-AA1F-7093D3BD235A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51E20053-BB1F-4EE8-AA1F-7093D3BD235A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51E20053-BB1F-4EE8-AA1F-7093D3BD235A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51E20053-BB1F-4EE8-AA1F-7093D3BD235A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3170FAA7-6398-4E07-AAA6-D2DABB9EBADD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3170FAA7-6398-4E07-AAA6-D2DABB9EBADD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3170FAA7-6398-4E07-AAA6-D2DABB9EBADD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3170FAA7-6398-4E07-AAA6-D2DABB9EBADD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,5 +55,7 @@ Global
 		{DB4D25C3-9893-403E-BDD2-F719CA760F2F} = {BC537BA1-3DD3-426E-9AF6-0215499ADC86}
 		{A48E08CD-6330-4FAE-B5EE-BED5C6C9ECC9} = {9BDA7108-EFC3-4AFA-8E02-B143D54F2942}
 		{C03BE8D5-636A-4778-B00E-89A3AE747DE6} = {9BDA7108-EFC3-4AFA-8E02-B143D54F2942}
+		{51E20053-BB1F-4EE8-AA1F-7093D3BD235A} = {D64E66EB-3CD0-4633-BF4C-79EA769361E1}
+		{3170FAA7-6398-4E07-AAA6-D2DABB9EBADD} = {D64E66EB-3CD0-4633-BF4C-79EA769361E1}
 	EndGlobalSection
 EndGlobal
