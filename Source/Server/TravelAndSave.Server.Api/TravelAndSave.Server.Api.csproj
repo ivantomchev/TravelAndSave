@@ -124,6 +124,10 @@
       <Project>{a48e08cd-6330-4fae-b5ee-bed5c6c9ecc9}</Project>
       <Name>TravelAndSave.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TravelAndSave.Server.Infrastructure\TravelAndSave.Server.Infrastructure.csproj">
+      <Project>{6c1fb6a8-47d6-4df2-9e45-21ab0e7d7106}</Project>
+      <Name>TravelAndSave.Server.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

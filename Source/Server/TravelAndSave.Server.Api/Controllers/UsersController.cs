@@ -14,7 +14,6 @@
             var repo = new UsersRepository();
 
             var result = repo.All().ToList();
-
             return Ok(result);
         }
     }
