@@ -12,9 +12,9 @@
     {
         private readonly IDbRepository<Location> locationsRepository;
 
-        public LocationsService(IDbRepository<Location> themeRepository)
+        public LocationsService(IDbRepository<Location> locationsRepository)
         {
-            this.locationsRepository = themeRepository;
+            this.locationsRepository = locationsRepository;
         }
 
         public LocationsService()

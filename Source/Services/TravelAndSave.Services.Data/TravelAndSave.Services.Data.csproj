@@ -41,8 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\ILocationsService.cs" />
+    <Compile Include="Interfaces\ITripsService.cs" />
     <Compile Include="LocationsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TripsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\TravelAndSave.Common\TravelAndSave.Common.csproj">
