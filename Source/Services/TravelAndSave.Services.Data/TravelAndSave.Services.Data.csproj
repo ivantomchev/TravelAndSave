@@ -40,7 +40,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LocationsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\TravelAndSave.Common\TravelAndSave.Common.csproj">
+      <Project>{cb9b58be-fc46-44a0-9e1f-35306baff0f7}</Project>
+      <Name>TravelAndSave.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\TravelAndSave.Data.Models\TravelAndSave.Data.Models.csproj">
+      <Project>{c03be8d5-636a-4778-b00e-89a3ae747de6}</Project>
+      <Name>TravelAndSave.Data.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\TravelAndSave.Data\TravelAndSave.Data.csproj">
+      <Project>{a48e08cd-6330-4fae-b5ee-bed5c6c9ecc9}</Project>
+      <Name>TravelAndSave.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
