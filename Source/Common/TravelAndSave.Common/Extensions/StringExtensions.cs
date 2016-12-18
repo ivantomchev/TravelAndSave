@@ -15,5 +15,21 @@
 
             return result;
         }
+
+        public static string GetFileExtension(this string source)
+        {
+            if (string.IsNullOrEmpty(source))
+            {
+                return string.Empty;
+            }
+
+            var lastPointIndex = source.LastIndexOf('.');
+            if (lastPointIndex == -1)
+            {
+                return string.Empty;
+            }
+
+            return source.Substring(lastPointIndex, source.Length - lastPointIndex).TrimStart('.');
+        }
     }
 }
