@@ -1,13 +1,14 @@
 ﻿namespace TravelAndSave.Services.Data
 {
     using Common.Models;
+    using Interfaces;
     using System.Collections.Generic;
     using System.Linq;
     using TravelAndSave.Data.Models;
     using TravelAndSave.Data.Repositories;
     using TravelAndSave.Data.Repositories.Base;
 
-    public class LocationsService
+    public class LocationsService : ILocationsService
     {
         private readonly IDbRepository<Location> locationsRepository;
 
