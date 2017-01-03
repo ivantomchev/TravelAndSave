@@ -1,5 +1,7 @@
 ﻿namespace TravelAndSave.Server.Infrastructure.Attributes
 {
+    using Common.Extensions;
+
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -30,7 +32,7 @@
             var provider = await streamContent.ReadAsMultipartAsync();
 
             var files = provider.Contents.Where(x => x.Headers.ContentType != null);
-            if (files.Count() == 0)
+            if (!files.Any())
             {
                 actionContext.Response = actionContext.Request.CreateErrorResponse(HttpStatusCode.BadRequest, "File is required.");
                 return;
@@ -42,7 +44,7 @@
                 return;
             }
 
-            var fileExtensions = files.Select(f => GetFileExtension(f.Headers.ContentDisposition.FileName.Trim('\"'))?.ToLower());
+            var fileExtensions = files.Select(f => f.Headers.ContentDisposition.FileName.GetFileExtension().Trim('\"')?.ToLower());
             if (AllowedFileExtensions != null && AllowedFileExtensions.Length > 0 && fileExtensions.Any(fe => !AllowedFileExtensions.Contains(fe)))
             {
                 var errorMessage = string.Format("Allowed file extensions are {0}.", string.Join(", ", AllowedFileExtensions));
@@ -61,18 +63,6 @@
             await base.OnActionExecutingAsync(actionContext, cancellationToken);
         }
 
-        private string GetFileExtension(string fullName)
-        {
-            var pointIndex = fullName.LastIndexOf('.');
-            if (pointIndex == -1)
-            {
-                return string.Empty;
-            }
-
-            var extension = fullName.Substring(pointIndex, fullName.Length - pointIndex);
-            return extension.TrimStart('.');
-        }
-
         private async Task<IEnumerable<byte[]>> ReadAsByteArraysAsync(params HttpContent[] bytes)
         {
             var filesBytesTasks = new List<Task<byte[]>>();
@@ -87,11 +77,14 @@
 
         private async Task<StreamContent> GetBufferedStreamContent(HttpContent httpContent)
         {
+            var httpContentAsString = await httpContent.ReadAsStringAsync();
+
             MemoryStream buffer = new MemoryStream();
-            StreamWriter writer = new StreamWriter(buffer);
-            await writer.WriteAsync(await httpContent.ReadAsStringAsync());
-            await writer.FlushAsync();
-            buffer.Position = 0;
+            using (StreamWriter writer = new StreamWriter(buffer))
+            {
+                await writer.WriteAsync(httpContentAsString);
+                buffer.Position = 0;
+            }
 
             StreamContent streamContent = new StreamContent(buffer);
 

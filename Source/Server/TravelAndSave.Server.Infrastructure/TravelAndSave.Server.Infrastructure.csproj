@@ -58,7 +58,12 @@
     <Compile Include="HttpActionResults\FileResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\TravelAndSave.Common\TravelAndSave.Common.csproj">
+      <Project>{cb9b58be-fc46-44a0-9e1f-35306baff0f7}</Project>
+      <Name>TravelAndSave.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
