@@ -1,5 +1,6 @@
 ﻿namespace TravelAndSave.Server.Api.Config
 {
+    using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using System.Web.Http;
 
@@ -9,6 +10,8 @@
         {
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             config.Formatters.JsonFormatter.UseDataContractJsonSerializer = false;
+            config.Formatters.JsonFormatter.SerializerSettings.Formatting = Formatting.None;
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 
             config.MapHttpAttributeRoutes();
 

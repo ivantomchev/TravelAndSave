@@ -10,7 +10,6 @@
         public DbRepository()
             : this(new TravelAndSaveDbContext())
         {
-            bool instanceExists = System.Data.Entity.SqlServer.SqlProviderServices.Instance != null;
         }
 
         public DbRepository(TravelAndSaveDbContext context)

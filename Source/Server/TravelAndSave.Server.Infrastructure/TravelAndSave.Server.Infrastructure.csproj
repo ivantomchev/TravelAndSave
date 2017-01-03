@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\MultipartFormDataValidationAttribute.cs" />
     <Compile Include="Attributes\ValidateModelAttribute.cs" />
     <Compile Include="Extensions\ApiControllerExtensions.cs" />
     <Compile Include="HttpActionResults\FileResult.cs" />

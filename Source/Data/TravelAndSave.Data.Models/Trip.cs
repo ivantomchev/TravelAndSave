@@ -14,9 +14,9 @@
 
         public DateTime StartDate { get; set; }
 
-        public int DriverId { get; set; }
+        public int UserId { get; set; }
 
-        public virtual User Driver { get; set; }
+        public virtual User Users { get; set; }
 
         public int StartLocationId { get; set; }
 

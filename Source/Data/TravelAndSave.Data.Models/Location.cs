@@ -17,7 +17,7 @@
 
         public string Name { get; set; }
 
-        public ICollection<Trip> Trips
+        public virtual ICollection<Trip> Trips
         {
             get
             {

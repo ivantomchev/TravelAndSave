@@ -116,6 +116,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\TravelAndSave.Common\TravelAndSave.Common.csproj">
+      <Project>{cb9b58be-fc46-44a0-9e1f-35306baff0f7}</Project>
+      <Name>TravelAndSave.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Data\TravelAndSave.Data.Models\TravelAndSave.Data.Models.csproj">
       <Project>{c03be8d5-636a-4778-b00e-89a3ae747de6}</Project>
       <Name>TravelAndSave.Data.Models</Name>
@@ -123,6 +127,10 @@
     <ProjectReference Include="..\..\Data\TravelAndSave.Data\TravelAndSave.Data.csproj">
       <Project>{a48e08cd-6330-4fae-b5ee-bed5c6c9ecc9}</Project>
       <Name>TravelAndSave.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\TravelAndSave.Services.Data\TravelAndSave.Services.Data.csproj">
+      <Project>{51E20053-BB1F-4EE8-AA1F-7093D3BD235A}</Project>
+      <Name>TravelAndSave.Services.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\TravelAndSave.Server.Infrastructure\TravelAndSave.Server.Infrastructure.csproj">
       <Project>{6c1fb6a8-47d6-4df2-9e45-21ab0e7d7106}</Project>
