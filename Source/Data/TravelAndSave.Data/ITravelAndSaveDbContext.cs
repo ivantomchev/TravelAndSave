@@ -5,11 +5,11 @@
 
     public interface ITravelAndSaveDbContext
     {
-        IDbSet<User> Users { get; set; }
+        DbSet<User> Users { get; set; }
 
-        IDbSet<Trip> Trips { get; set; }
+        DbSet<Trip> Trips { get; set; }
 
-        IDbSet<Location> Locations { get; set; }
+        DbSet<Location> Locations { get; set; }
 
         int SaveChanges();
     }

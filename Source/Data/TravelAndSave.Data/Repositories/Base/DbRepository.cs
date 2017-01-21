@@ -1,8 +1,11 @@
 ﻿namespace TravelAndSave.Data.Repositories.Base
 {
     using System;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
 
     public class DbRepository<T> : IDbRepository<T> where T : class
@@ -23,7 +26,7 @@
             this.DbSet = this.Context.Set<T>();
         }
 
-        protected IDbSet<T> DbSet { get; set; }
+        protected DbSet<T> DbSet { get; set; }
 
         protected DbContext Context { get; set; }
 

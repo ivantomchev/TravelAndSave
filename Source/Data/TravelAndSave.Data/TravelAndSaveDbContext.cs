@@ -15,11 +15,11 @@
             return new TravelAndSaveDbContext();
         }
 
-        public virtual IDbSet<User> Users { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
-        public virtual IDbSet<Trip> Trips { get; set; }
+        public virtual DbSet<Trip> Trips { get; set; }
 
-        public virtual IDbSet<Location> Locations { get; set; }
+        public virtual DbSet<Location> Locations { get; set; }
 
         public override int SaveChanges()
         {
