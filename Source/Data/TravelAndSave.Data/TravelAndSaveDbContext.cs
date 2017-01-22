@@ -1,7 +1,9 @@
 ﻿namespace TravelAndSave.Data
 {
+    using Mappings;
     using Models;
     using System.Data.Entity;
+    using System.Data.Entity.ModelConfiguration;
 
     public class TravelAndSaveDbContext : DbContext, ITravelAndSaveDbContext
     {
@@ -28,8 +30,9 @@
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Location>().HasMany(l => l.Trips).WithRequired(t => t.EndLocation).HasForeignKey(t => t.EndLocationId).WillCascadeOnDelete(false);
-            modelBuilder.Entity<Location>().HasMany(l => l.Trips).WithRequired(t => t.StartLocation).HasForeignKey(t => t.StartLocationId).WillCascadeOnDelete(false);
+            modelBuilder.Configurations.Add(new LocationEntityMap());
+            //modelBuilder.Entity<Location>().HasMany(l => l.Trips).WithRequired(t => t.EndLocation).HasForeignKey(t => t.EndLocationId).WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Location>().HasMany(l => l.Trips).WithRequired(t => t.StartLocation).HasForeignKey(t => t.StartLocationId).WillCascadeOnDelete(false);
 
             base.OnModelCreating(modelBuilder);
         }
