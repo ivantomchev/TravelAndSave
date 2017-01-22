@@ -1,11 +1,8 @@
 ﻿namespace TravelAndSave.Data.Repositories.Base
 {
     using System;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
-    using System.Linq.Expressions;
     using System.Threading.Tasks;
 
     public class DbRepository<T> : IDbRepository<T> where T : class
@@ -30,8 +27,13 @@
 
         protected DbContext Context { get; set; }
 
-        public virtual IQueryable<T> All()
+        public virtual IQueryable<T> All(bool enableTrackChanges = true)
         {
+            if (!enableTrackChanges)
+            {
+                return this.DbSet.AsNoTracking().AsQueryable();
+            }
+
             return this.DbSet.AsQueryable();
         }
 
@@ -51,6 +53,11 @@
             {
                 this.DbSet.Add(entity);
             }
+        }
+
+        public virtual void AddRange(params T[] entities)
+        {
+            this.DbSet.AddRange(entities);
         }
 
         public virtual void Update(T entity)
@@ -86,6 +93,11 @@
             {
                 this.Delete(entity);
             }
+        }
+
+        public virtual void DeleteRange(params T[] entities)
+        {
+            this.DbSet.RemoveRange(entities);
         }
 
         public virtual T Attach(T entity)
