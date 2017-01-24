@@ -3,7 +3,8 @@
     using Mappings;
     using Models;
     using System.Data.Entity;
-    using System.Data.Entity.ModelConfiguration;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     public class TravelAndSaveDbContext : DbContext, ITravelAndSaveDbContext
     {
@@ -26,6 +27,16 @@
         public override int SaveChanges()
         {
             return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync()
+        {
+            return base.SaveChangesAsync();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

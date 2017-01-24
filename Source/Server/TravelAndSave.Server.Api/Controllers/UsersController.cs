@@ -1,8 +1,6 @@
 ﻿namespace TravelAndSave.Server.Api.Controllers
 {
     using Base;
-    using Data.Repositories;
-    using System.Linq;
     using System.Web.Http;
     using Services.Data.Interfaces;
     using Services.Data;
@@ -21,11 +19,7 @@
         [HttpGet]
         public IHttpActionResult GetAll()
         {
-            var repo = new UsersRepository();
-
-            var result = repo.All().ToList();
-
-            return Ok(result);
+            return Ok();
         }
 
         [HttpGet]

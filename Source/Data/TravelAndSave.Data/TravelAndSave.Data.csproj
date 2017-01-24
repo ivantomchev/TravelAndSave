@@ -53,12 +53,11 @@
     <Compile Include="Mappings\LocationEntityMap.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\Base\DbRepository.cs" />
-    <Compile Include="Repositories\Base\IDbRepository.cs" />
-    <Compile Include="Repositories\LocationsRepository.cs" />
-    <Compile Include="Repositories\TripsRepository.cs" />
-    <Compile Include="Repositories\UsersRepository.cs" />
+    <Compile Include="Repositories\DbRepository.cs" />
+    <Compile Include="Repositories\IDbRepository.cs" />
     <Compile Include="TravelAndSaveDbContext.cs" />
+    <Compile Include="UnitOfWork\ITravelAndSaveData.cs" />
+    <Compile Include="UnitOfWork\TravelAndSaveData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -70,6 +69,7 @@
       <Name>TravelAndSave.Data.Models</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,4 +1,4 @@
-﻿namespace TravelAndSave.Data.Repositories.Base
+﻿namespace TravelAndSave.Data.Repositories
 {
     using System;
     using System.Data.Entity;

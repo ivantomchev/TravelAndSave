@@ -6,7 +6,6 @@
     using System.Linq;
     using TravelAndSave.Data.Models;
     using TravelAndSave.Data.Repositories;
-    using TravelAndSave.Data.Repositories.Base;
 
     public class TripsService : ITripsService
     {
@@ -18,7 +17,7 @@
         }
 
         public TripsService()
-            : this(new TripsRepository())
+            : this(new DbRepository<Trip>())
         {
         }
 
