@@ -24,15 +24,15 @@
 
         [HttpGet]
         [Route("test")]
-        public IHttpActionResult GetPenis()
+        public IHttpActionResult GetData()
         {
-            var res = this.locationsService.GetAll();
-            if (res.IsFailure)
+            var locationsResult = this.locationsService.GetAll();
+            if (locationsResult.IsFailure)
             {
-                return Content(HttpStatusCode.InternalServerError, "Fuck this shit");
+                return Content(HttpStatusCode.InternalServerError, locationsResult.ErrorMessage);
             }
 
-            return Ok(res.Value);
+            return Ok(locationsResult.Value);
         }
     }
 }

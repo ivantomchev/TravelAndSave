@@ -18,7 +18,7 @@
             {
                 throw new ArgumentException("An instance of DbContext is required to use this repository.", "context");
             }
-
+            
             this.Context = context;
             this.DbSet = this.Context.Set<T>();
         }

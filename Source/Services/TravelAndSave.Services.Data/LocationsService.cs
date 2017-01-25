@@ -79,7 +79,7 @@
 
         public Result<IEnumerable<Location>> GetAll()
         {
-            var locations = this.locationsRepository.All().AsEnumerable();
+            var locations = this.locationsRepository.All().ToList().AsEnumerable();
 
             return Result.Ok(locations);
         }
