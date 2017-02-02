@@ -1,7 +1,6 @@
 ﻿namespace TravelAndSave.Server.Infrastructure.Attributes
 {
     using Common.Extensions;
-
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -14,7 +13,7 @@
 
     public class MultipartFormDataValidationAttribute : ActionFilterAttribute
     {
-        public double MaxFileSize { get; set; } = double.MaxValue;
+        public uint MaxFileSize { get; set; }
         public string[] AllowedFileExtensions { get; set; }
         public bool AllowMultipleFiles { get; set; } = false;
 
@@ -29,7 +28,17 @@
 
             StreamContent streamContent = await this.GetBufferedStreamContent(request.Content);
 
-            var provider = await streamContent.ReadAsMultipartAsync();
+            MultipartMemoryStreamProvider provider = null;
+            try
+            {
+                provider = await streamContent.ReadAsMultipartAsync();
+            }
+            catch (IOException ex)
+            {
+                var message = ex.Message;
+                actionContext.Response = actionContext.Request.CreateErrorResponse(HttpStatusCode.UnsupportedMediaType, "Unsupported MediaType");
+                return;
+            }
 
             var files = provider.Contents.Where(x => x.Headers.ContentType != null);
             if (!files.Any())
@@ -53,7 +62,7 @@
             }
 
             var byteArrays = await this.ReadAsByteArraysAsync(files.ToArray());
-            if (byteArrays.Any(b => MaxFileSize < (double)b.Length / 1024 / 1024))
+            if (this.MaxFileSize != 0 && byteArrays.Any(b => MaxFileSize < b.Length / 1024))
             {
                 var errorMessage = string.Format("Max file size allowed is {0} Mb.", MaxFileSize);
                 actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.BadRequest, errorMessage);
@@ -80,11 +89,10 @@
             var httpContentAsString = await httpContent.ReadAsStringAsync();
 
             MemoryStream buffer = new MemoryStream();
-            using (StreamWriter writer = new StreamWriter(buffer))
-            {
-                await writer.WriteAsync(httpContentAsString);
-                buffer.Position = 0;
-            }
+            StreamWriter writer = new StreamWriter(buffer);
+            await writer.WriteAsync(httpContentAsString);
+            await writer.FlushAsync();
+            buffer.Position = 0;
 
             StreamContent streamContent = new StreamContent(buffer);
 
