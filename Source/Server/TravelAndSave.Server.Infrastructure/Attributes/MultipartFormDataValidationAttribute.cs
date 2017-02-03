@@ -1,6 +1,7 @@
 ﻿namespace TravelAndSave.Server.Infrastructure.Attributes
 {
     using Common.Extensions;
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -13,9 +14,20 @@
 
     public class MultipartFormDataValidationAttribute : ActionFilterAttribute
     {
+        /// <summary>
+        /// Maximum file size in KB
+        /// </summary>
         public uint MaxFileSize { get; set; }
-        public string[] AllowedFileExtensions { get; set; }
-        public bool AllowMultipleFiles { get; set; } = false;
+
+        /// <summary>
+        /// Comma separated file extensions allowed for upload
+        /// </summary>
+        public string AllowedFileExtensions { get; set; }
+
+        /// <summary>
+        /// Allowing multiple file upload
+        /// </summary>
+        public bool AllowMultipleFiles { get; set; }
 
         public override async Task OnActionExecutingAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
         {
@@ -26,12 +38,12 @@
                 return;
             }
 
-            StreamContent streamContent = await this.GetBufferedStreamContent(request.Content);
+            StreamContent streamContent = await this.GetBufferedStreamContentAsync(request.Content);
 
-            MultipartMemoryStreamProvider provider = null;
+            MultipartMemoryStreamProvider provider = new MultipartMemoryStreamProvider();
             try
             {
-                provider = await streamContent.ReadAsMultipartAsync();
+                await streamContent.ReadAsMultipartAsync(provider);
             }
             catch (IOException ex)
             {
@@ -53,20 +65,30 @@
                 return;
             }
 
-            var fileExtensions = files.Select(f => f.Headers.ContentDisposition.FileName.GetFileExtension().Trim('\"')?.ToLower());
-            if (AllowedFileExtensions != null && AllowedFileExtensions.Length > 0 && fileExtensions.Any(fe => !AllowedFileExtensions.Contains(fe)))
+            //Validate allowed file extensions
+            if (!string.IsNullOrEmpty(this.AllowedFileExtensions))
             {
-                var errorMessage = string.Format("Allowed file extensions are {0}.", string.Join(", ", AllowedFileExtensions));
-                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.BadRequest, errorMessage);
-                return;
+                var allowedFileExtensionsAsArray = this.AllowedFileExtensions.ToLower().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+                var fileExtensions = files.Select(f => f.Headers.ContentDisposition.FileName.GetFileExtension().Trim('\"')?.ToLower());
+                if (fileExtensions.Any(fe => !allowedFileExtensionsAsArray.Contains(fe)))
+                {
+                    var errorMessage = string.Format("Allowed file extensions are {0}.", string.Join(", ", AllowedFileExtensions));
+                    actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.BadRequest, errorMessage);
+                    return;
+                }
             }
 
-            var byteArrays = await this.ReadAsByteArraysAsync(files.ToArray());
-            if (this.MaxFileSize != 0 && byteArrays.Any(b => MaxFileSize < b.Length / 1024))
+            //Validate allowed file maximum size
+            if (this.MaxFileSize != 0)
             {
-                var errorMessage = string.Format("Max file size allowed is {0} Mb.", MaxFileSize);
-                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.BadRequest, errorMessage);
-                return;
+                var byteArrays = await this.ReadAsByteArraysAsync(files.ToArray());
+                if (byteArrays.Any(b => MaxFileSize < b.Length / 1024))
+                {
+                    var errorMessage = string.Format("Max file size allowed is {0} Kb.", MaxFileSize);
+                    actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.BadRequest, errorMessage);
+                    return;
+                }
             }
 
             await base.OnActionExecutingAsync(actionContext, cancellationToken);
@@ -84,14 +106,12 @@
             return await Task.WhenAll(filesBytesTasks);
         }
 
-        private async Task<StreamContent> GetBufferedStreamContent(HttpContent httpContent)
+        private async Task<StreamContent> GetBufferedStreamContentAsync(HttpContent httpContent)
         {
-            var httpContentAsString = await httpContent.ReadAsStringAsync();
+            await httpContent.LoadIntoBufferAsync();
 
-            MemoryStream buffer = new MemoryStream();
-            StreamWriter writer = new StreamWriter(buffer);
-            await writer.WriteAsync(httpContentAsString);
-            await writer.FlushAsync();
+            var buffer = new MemoryStream();
+            await httpContent.CopyToAsync(buffer);
             buffer.Position = 0;
 
             StreamContent streamContent = new StreamContent(buffer);
@@ -103,5 +123,6 @@
 
             return streamContent;
         }
+
     }
 }
