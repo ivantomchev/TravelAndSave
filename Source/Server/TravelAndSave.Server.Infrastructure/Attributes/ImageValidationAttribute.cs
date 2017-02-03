@@ -156,14 +156,12 @@
 
         private async Task<IEnumerable<byte[]>> ReadAsByteArraysAsync(params HttpContent[] httpContent)
         {
-            var filesBytesTasks = new List<Task<byte[]>>();
-            foreach (var content in httpContent)
+            var tasks = httpContent.Select(async content =>
             {
-                var currentTask = content.ReadAsByteArrayAsync();
-                filesBytesTasks.Add(currentTask);
-            }
+                return await content.ReadAsByteArrayAsync();
+            });
 
-            return await Task.WhenAll(filesBytesTasks);
+            return await Task.WhenAll(tasks);
         }
 
         private async Task<StreamContent> GetBufferedStreamContentAsync(HttpContent httpContent)
