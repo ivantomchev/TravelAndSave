@@ -8,6 +8,7 @@
     using System.Linq;
     using System.Net;
     using System.Net.Http;
+    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Web.Http.Controllers;
@@ -61,10 +62,10 @@
 
             StreamContent streamContent = await this.GetBufferedStreamContentAsync(request.Content);
 
-            MultipartMemoryStreamProvider provider = null;
+            MultipartMemoryStreamProvider provider = new MultipartMemoryStreamProvider();
             try
             {
-                provider = await streamContent.ReadAsMultipartAsync();
+                await streamContent.ReadAsMultipartAsync(provider);
             }
             catch (IOException ex)
             {
@@ -167,12 +168,10 @@
 
         private async Task<StreamContent> GetBufferedStreamContentAsync(HttpContent httpContent)
         {
-            var httpContentAsString = await httpContent.ReadAsStringAsync();
+            await httpContent.LoadIntoBufferAsync();
 
-            MemoryStream buffer = new MemoryStream();
-            StreamWriter writer = new StreamWriter(buffer);
-            await writer.WriteAsync(httpContentAsString);
-            await writer.FlushAsync();
+            var buffer = new MemoryStream();
+            await httpContent.CopyToAsync(buffer);
             buffer.Position = 0;
 
             StreamContent streamContent = new StreamContent(buffer);

@@ -8,6 +8,7 @@
     using Infrastructure.Attributes;
     using System.Threading.Tasks;
     using System.Net.Http;
+    using System.Linq;
 
     [RoutePrefix("api/users")]
     public class UsersController : BaseController
@@ -41,21 +42,14 @@
         [HttpPost]
         [Route("test2")]
         //[MultipartFormDataValidation]
-        [ImageValidation(MaxFileSize = 1000, MaxWidth = 1024, MaxHeight = 768, AllowedFileExtensions = "jpeg,png", AllowMultipleFiles = false)]
+        [ImageValidation(MaxFileSize = 865, AllowedFileExtensions = "jpeg,jpg,png", AllowMultipleFiles = true)]
         public async Task<IHttpActionResult> GetData2()
         {
-
             var res = await this.Request.Content.ReadAsMultipartAsync();
 
-            return Ok();
+            var bytes = await res.Contents.FirstOrDefault().ReadAsByteArrayAsync();
 
-            var locationsResult = this.locationsService.Detete(1, true);
-            if (locationsResult.IsFailure)
-            {
-                return Content(HttpStatusCode.InternalServerError, locationsResult.ErrorMessage);
-            }
-
-            return Ok();
+            return Ok(bytes.Length / 1024);
         }
     }
 }
