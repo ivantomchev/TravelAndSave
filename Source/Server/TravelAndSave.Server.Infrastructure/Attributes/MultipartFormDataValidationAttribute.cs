@@ -3,12 +3,14 @@
     using Common.Extensions;
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.IO;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
+    using System.Web.Configuration;
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
 
@@ -35,6 +37,14 @@
             if (!request.Content.IsMimeMultipartContent())
             {
                 actionContext.Response = actionContext.Request.CreateErrorResponse(HttpStatusCode.UnsupportedMediaType, "Unsupported MediaType");
+                return;
+            }
+
+            var maxApplicationRequestLength = this.GetApplicationMaxRequestLength();
+            if (maxApplicationRequestLength < request.Content.Headers.ContentLength / 1024)
+            {
+                var errorMessage = string.Format("Maximum request length for the application is limited to {0} Kb.", maxApplicationRequestLength);
+                actionContext.Response = actionContext.Request.CreateErrorResponse(HttpStatusCode.BadRequest, errorMessage);
                 return;
             }
 
@@ -94,16 +104,14 @@
             await base.OnActionExecutingAsync(actionContext, cancellationToken);
         }
 
-        private async Task<IEnumerable<byte[]>> ReadAsByteArraysAsync(params HttpContent[] bytes)
+        private async Task<IEnumerable<byte[]>> ReadAsByteArraysAsync(params HttpContent[] httpContents)
         {
-            var filesBytesTasks = new List<Task<byte[]>>();
-            foreach (var file in bytes)
+            var tasks = httpContents.Select(async content =>
             {
-                var currentTask = file.ReadAsByteArrayAsync();
-                filesBytesTasks.Add(currentTask);
-            }
+                return await content.ReadAsByteArrayAsync();
+            });
 
-            return await Task.WhenAll(filesBytesTasks);
+            return await Task.WhenAll(tasks);
         }
 
         private async Task<StreamContent> GetBufferedStreamContentAsync(HttpContent httpContent)
@@ -124,5 +132,14 @@
             return streamContent;
         }
 
+        private int GetApplicationMaxRequestLength()
+        {
+            var section = ConfigurationManager.GetSection("system.web/httpRuntime") as HttpRuntimeSection;
+            if (section != null)
+            {
+                return section.MaxRequestLength;
+            }
+            return 4096;
+        }
     }
 }

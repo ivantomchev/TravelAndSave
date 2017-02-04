@@ -41,8 +41,8 @@
 
         [HttpPost]
         [Route("test2")]
-        [MultipartFormDataValidation(AllowedFileExtensions = "txt,pdf,json", AllowMultipleFiles = true, MaxFileSize = 2000)]
-        //[ImageValidation(MaxFileSize = 865, AllowedFileExtensions = "jpeg,jpg,png", AllowMultipleFiles = true, MaxHeight = 1600, MaxWidth = 1586)]
+        //[MultipartFormDataValidation(AllowedFileExtensions = "txt,pdf,json", AllowMultipleFiles = true, MaxFileSize = 2000)]
+        [ImageValidation(MaxFileSize = 865, AllowedFileExtensions = "jpeg,jpg,png", AllowMultipleFiles = true, MaxHeight = 1600, MaxWidth = 1586)]
         public async Task<IHttpActionResult> GetData2()
         {
             var res = await this.Request.Content.ReadAsMultipartAsync();

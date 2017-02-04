@@ -3,14 +3,15 @@
     using Common.Extensions;
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Drawing;
     using System.IO;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
-    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
+    using System.Web.Configuration;
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
 
@@ -57,6 +58,14 @@
             if (!request.Content.IsMimeMultipartContent())
             {
                 actionContext.Response = actionContext.Request.CreateErrorResponse(HttpStatusCode.UnsupportedMediaType, "Unsupported MediaType");
+                return;
+            }
+
+            var maxApplicationRequestLength = this.GetApplicationMaxRequestLength();
+            if (maxApplicationRequestLength < request.Content.Headers.ContentLength / 1024)
+            {
+                var errorMessage = string.Format("Maximum request length for the application is limited to {0} Kb.", maxApplicationRequestLength);
+                actionContext.Response = actionContext.Request.CreateErrorResponse(HttpStatusCode.BadRequest, errorMessage);
                 return;
             }
 
@@ -154,9 +163,9 @@
             await base.OnActionExecutingAsync(actionContext, cancellationToken);
         }
 
-        private async Task<IEnumerable<byte[]>> ReadAsByteArraysAsync(params HttpContent[] httpContent)
+        private async Task<IEnumerable<byte[]>> ReadAsByteArraysAsync(params HttpContent[] httpContents)
         {
-            var tasks = httpContent.Select(async content =>
+            var tasks = httpContents.Select(async content =>
             {
                 return await content.ReadAsByteArrayAsync();
             });
@@ -182,17 +191,25 @@
             return streamContent;
         }
 
-        private async Task<IEnumerable<Image>> GetImagesFromContentAsync(params HttpContent[] httpContent)
+        private async Task<IEnumerable<Image>> GetImagesFromContentAsync(params HttpContent[] httpContents)
         {
-            var tasks = httpContent.Select(async content =>
+            var tasks = httpContents.Select(async content =>
             {
                 var stream = await content.ReadAsStreamAsync();
                 return Image.FromStream(stream);
             });
 
-            var images = await Task.WhenAll(tasks);
+            return await Task.WhenAll(tasks);
+        }
 
-            return images;
+        private int GetApplicationMaxRequestLength()
+        {
+            var section = ConfigurationManager.GetSection("system.web/httpRuntime") as HttpRuntimeSection;
+            if (section != null)
+            {
+                return section.MaxRequestLength;
+            }
+            return 4096;
         }
     }
 }
