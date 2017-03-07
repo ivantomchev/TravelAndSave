@@ -18,7 +18,8 @@ namespace TravelAndSave.Server.Authorization
                 TokenEndpointPath = new PathString("/api/token"),
                 Provider = new AuthorizationServerProvider(),
                 RefreshTokenProvider = new RefreshTokenProvider(),
-                AccessTokenExpireTimeSpan = TimeSpan.FromHours(1)
+                AccessTokenExpireTimeSpan = TimeSpan.FromHours(1),
+                AccessTokenProvider = new AccessTokenProvider(),
             };
 
             app.UseOAuthAuthorizationServer(OAuthServerOptions);

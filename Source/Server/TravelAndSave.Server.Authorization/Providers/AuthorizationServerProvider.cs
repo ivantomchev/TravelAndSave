@@ -34,9 +34,9 @@
         {
             IDictionary<string, string> data = new Dictionary<string, string>
             {
-                {"FirstName", firstName },
+                { "FirstName", firstName },
                 { "LastName", lastName },
-                {"Role", role }
+                { "Role", role }
             };
 
             return new AuthenticationProperties(data);
