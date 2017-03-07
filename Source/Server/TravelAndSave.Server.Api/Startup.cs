@@ -1,4 +1,5 @@
 ﻿using Microsoft.Owin;
+using Microsoft.Owin.Security.OAuth;
 using Owin;
 using System;
 using System.Data.Entity;
@@ -19,6 +20,12 @@ namespace TravelAndSave.Server.Api
 
             var httpConfiguration = new HttpConfiguration();
             WebApiConfig.Register(httpConfiguration);
+
+            //Token Consumption, configuring the Resource Server to accept (consume only) tokens with bearer scheme
+            //1. Extracting the access token which is sent in the “Authorization header” with the “Bearer” scheme.
+            //2. Extracting the authentication ticket from access token, this ticket will contain claims identity and any additional authentication properties.
+            //3. Checking the validity period of the authentication ticket.
+            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
 
             app.UseWebApi(httpConfiguration);
         }

@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelAndSave.Common", "Com
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelAndSave.Common.Utilities", "Common\TravelAndSave.Common.Utilities\TravelAndSave.Common.Utilities.csproj", "{971D391D-EF51-4B9A-8C14-5BEB100D0CB9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelAndSave.Server.Authorization", "Server\TravelAndSave.Server.Authorization\TravelAndSave.Server.Authorization.csproj", "{9F2180B0-C6A9-4C2D-9799-A420F3BACE5C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{971D391D-EF51-4B9A-8C14-5BEB100D0CB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{971D391D-EF51-4B9A-8C14-5BEB100D0CB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{971D391D-EF51-4B9A-8C14-5BEB100D0CB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F2180B0-C6A9-4C2D-9799-A420F3BACE5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F2180B0-C6A9-4C2D-9799-A420F3BACE5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F2180B0-C6A9-4C2D-9799-A420F3BACE5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F2180B0-C6A9-4C2D-9799-A420F3BACE5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,5 +86,6 @@ Global
 		{6C1FB6A8-47D6-4DF2-9E45-21AB0E7D7106} = {BC537BA1-3DD3-426E-9AF6-0215499ADC86}
 		{CB9B58BE-FC46-44A0-9E1F-35306BAFF0F7} = {32183D35-A4CE-4985-A2BB-92A7FAECF731}
 		{971D391D-EF51-4B9A-8C14-5BEB100D0CB9} = {32183D35-A4CE-4985-A2BB-92A7FAECF731}
+		{9F2180B0-C6A9-4C2D-9799-A420F3BACE5C} = {BC537BA1-3DD3-426E-9AF6-0215499ADC86}
 	EndGlobalSection
 EndGlobal
