@@ -70,6 +70,7 @@
     <Compile Include="Extensions\IAppBuilderExtensions.cs" />
     <Compile Include="Extensions\IOwinContextExtensions.cs" />
     <Compile Include="HttpActionResults\FileResult.cs" />
+    <Compile Include="OwinMiddlewares\CreatePerOwinContextMiddleware.cs" />
     <Compile Include="OwinMiddlewares\MultiTenancyMiddleware.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

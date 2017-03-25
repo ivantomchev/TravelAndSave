@@ -10,5 +10,11 @@
             app.Use<MultiTenancyMiddleware>();
             return app;
         }
+
+        public static IAppBuilder CreatePerOwinContext<T>(this IAppBuilder app, T instance)
+        {
+            app.Use<CreatePerOwinContextMiddleware<T>>(instance);
+            return app;
+        }
     }
 }

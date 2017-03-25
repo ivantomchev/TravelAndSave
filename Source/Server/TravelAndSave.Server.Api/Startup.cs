@@ -26,7 +26,6 @@ namespace TravelAndSave.Server.Api
             //2. Extracting the authentication ticket from access token, this ticket will contain claims identity and any additional authentication properties.
             //3. Checking the validity period of the authentication ticket.
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
-
             app.UseWebApi(httpConfiguration);
         }
 
